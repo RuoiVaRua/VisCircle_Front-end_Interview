@@ -1,0 +1,17 @@
+.sidebar {
+    height: 100%;
+    width: 65px;
+    position: fixed;
+    top: 0;
+    left: 0;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 0px 1px 0px 0px;
+    
+    background: #343E4D;
+    box-shadow: inset -1px 0px 0px #1F252E;
+
+    align-self: stretch;
+}
