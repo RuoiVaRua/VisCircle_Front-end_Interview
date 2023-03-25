@@ -4,6 +4,6 @@ export interface ImageObject {
     category: string;
     description: string;
     metadata: {
-        value: string
-    }[]
+        value: string;
+    }[];
 }

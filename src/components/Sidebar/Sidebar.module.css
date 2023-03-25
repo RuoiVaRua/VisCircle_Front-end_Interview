@@ -1,27 +1,26 @@
 .sidebar {
     height: 100%;
     width: 65px;
-    
+
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 1px 0px 0px;
-    
-    background: #343E4D;
-    box-shadow: inset -1px 0px 0px #1F252E;
+
+    background: #343e4d;
+    box-shadow: inset -1px 0px 0px #1f252e;
     z-index: 1;
 }
 
-.sidebarItem
-, .selectedSidebarItem 
-{
+.sidebarItem,
+.selectedSidebarItem {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 0px;
     width: 100%;
-    aspect-ratio: 1 / 1;    
+    aspect-ratio: 1 / 1;
 
     background: inherit;
     border: none;
@@ -30,52 +29,52 @@
 
 .itemImage {
     width: 32px;
-    height: 32px;    
-    filter: invert(76%) sepia(12%) saturate(416%) hue-rotate(165deg) brightness(91%) contrast(93%);
+    height: 32px;
+    filter: invert(76%) sepia(12%) saturate(416%) hue-rotate(165deg)
+        brightness(91%) contrast(93%);
 }
 
 .itemLabel {
-    font-family: 'Inter';
+    font-family: "Inter";
     font-style: normal;
     font-weight: 500;
     font-size: 9px;
     line-height: 11px;
     text-align: center;
-    
-    color: #A1B4C4;    
+
+    color: #a1b4c4;
 }
 
 .sidebarItem:hover .itemImage {
-    filter: invert(88%) sepia(4%) saturate(136%) hue-rotate(170deg) brightness(110%) contrast(96%);
+    filter: invert(88%) sepia(4%) saturate(136%) hue-rotate(170deg)
+        brightness(110%) contrast(96%);
 }
 
 .sidebarItem:hover .itemLabel {
-    color: #F2F5F8;
+    color: #f2f5f8;
 }
 
-.sidebarItem:focus
-, .selectedSidebarItem
-{
-    box-shadow: inset 1px 0px 0px #3FA9F5;
+.sidebarItem:focus,
+.selectedSidebarItem {
+    box-shadow: inset 1px 0px 0px #3fa9f5;
 }
 
-.sidebarItem:focus .itemImage
-, .selectedSidebarItem .itemImage 
-{
-    filter: invert(100%) sepia(3%) saturate(7165%) hue-rotate(84deg) brightness(111%) contrast(98%);
+.sidebarItem:focus .itemImage,
+.selectedSidebarItem .itemImage {
+    filter: invert(100%) sepia(3%) saturate(7165%) hue-rotate(84deg)
+        brightness(111%) contrast(98%);
 }
 
-.sidebarItem:focus .itemLabel
-, .selectedSidebarItem .itemLabel 
-{
-    color: #FCFDFD;
+.sidebarItem:focus .itemLabel,
+.selectedSidebarItem .itemLabel {
+    color: #fcfdfd;
 }
 
-@media only screen and (max-width: 600px)  {
+@media only screen and (max-width: 600px) {
     .sidebar {
         width: 100%;
         height: 10vw;
-        
+
         flex-direction: row;
         align-items: flex-start;
         padding: 1px 0px 0px 0px;
@@ -83,39 +82,37 @@
 
         position: fixed;
         z-index: 1;
-    }   
+    }
 
-    .sidebarItem
-    , .selectedSidebarItem 
-    {
+    .sidebarItem,
+    .selectedSidebarItem {
         flex: 1;
         height: 100%;
         width: auto;
-    }   
-    
-    .sidebarItem:focus
-    , .selectedSidebarItem
-    {
-        box-shadow: inset 0px 3px 0px #3FA9F5;
+    }
+
+    .sidebarItem:focus,
+    .selectedSidebarItem {
+        box-shadow: inset 0px 3px 0px #3fa9f5;
     }
 }
 
-@media only screen and (max-width: 400px)  {
+@media only screen and (max-width: 400px) {
     .sidebar {
         height: 15vw;
     }
 }
 
-@media only screen and (max-width: 250px)  {
+@media only screen and (max-width: 250px) {
     .sidebar {
         height: 20vw;
     }
 }
 
-@media only screen and (max-width: 200px)  {
+@media only screen and (max-width: 200px) {
     .itemImage {
         width: 20px;
-        height: 20px; 
+        height: 20px;
     }
     .itemLabel {
         font-size: 8px;

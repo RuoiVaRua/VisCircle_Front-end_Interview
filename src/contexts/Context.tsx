@@ -10,5 +10,5 @@ interface ContextType {
 export const Context = createContext<ContextType>({
     setSelectedCategory: () => {},
     setSelectedImage: () => {},
-    setImageList: () => {}
+    setImageList: () => {},
 });

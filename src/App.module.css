@@ -2,14 +2,14 @@
     display: flex;
     flex-direction: row;
     align-items: flex-start;
-    padding: 0px;  
-    background: #FCFDFD;    
+    padding: 0px;
+    background: #fcfdfd;
     height: 100%;
     width: 100%;
     position: relative;
 }
 
-@media only screen and (max-width: 600px)  {
+@media only screen and (max-width: 600px) {
     .app {
         flex-direction: column-reverse;
         align-items: center;
