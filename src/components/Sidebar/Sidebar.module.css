@@ -1,14 +1,15 @@
 .sidebar {
     height: 100%;
-    width: 65px;
+    width: var(--sidebar-width, 65px);
 
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     padding: 0px 1px 0px 0px;
 
-    background: #343e4d;
-    box-shadow: inset -1px 0px 0px #1f252e;
+    background: var(--black-grey, #343e4d);
+    box-shadow: var(--box-shadow, inset -1px 0px 0px)
+        var(--sidebar-shadow, #1f252e);
     z-index: 1;
 }
 
@@ -28,8 +29,8 @@
 }
 
 .itemImage {
-    width: 32px;
-    height: 32px;
+    width: var(--sidebar-image-size, 32px);
+    height: var(--sidebar-image-size, 32px);
     filter: invert(76%) sepia(12%) saturate(416%) hue-rotate(165deg)
         brightness(91%) contrast(93%);
 }
@@ -42,7 +43,7 @@
     line-height: 11px;
     text-align: center;
 
-    color: #a1b4c4;
+    color: var(--sidebar-label-color, #a1b4c4);
 }
 
 .sidebarItem:hover .itemImage {
@@ -51,12 +52,12 @@
 }
 
 .sidebarItem:hover .itemLabel {
-    color: #f2f5f8;
+    color: var(--white2, #f2f5f8);
 }
 
 .sidebarItem:focus,
 .selectedSidebarItem {
-    box-shadow: inset 1px 0px 0px #3fa9f5;
+    box-shadow: inset 1px 0px 0px var(--blue, #3fa9f5);
 }
 
 .sidebarItem:focus .itemImage,
@@ -67,13 +68,13 @@
 
 .sidebarItem:focus .itemLabel,
 .selectedSidebarItem .itemLabel {
-    color: #fcfdfd;
+    color: var(--white1, #fcfdfd);
 }
 
 @media only screen and (max-width: 600px) {
     .sidebar {
         width: 100%;
-        height: 10vw;
+        height: var(--mobile-sidebar-height, 9vh);
 
         flex-direction: row;
         align-items: flex-start;
@@ -93,19 +94,7 @@
 
     .sidebarItem:focus,
     .selectedSidebarItem {
-        box-shadow: inset 0px 3px 0px #3fa9f5;
-    }
-}
-
-@media only screen and (max-width: 400px) {
-    .sidebar {
-        height: 15vw;
-    }
-}
-
-@media only screen and (max-width: 250px) {
-    .sidebar {
-        height: 20vw;
+        box-shadow: inset 0px 3px 0px var(--blue, #3fa9f5);
     }
 }
 

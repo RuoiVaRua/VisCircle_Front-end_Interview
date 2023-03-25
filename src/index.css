@@ -15,6 +15,34 @@
     display: none; /* Safari and Chrome */
 }
 
+:root {
+    --white1: #fcfdfd;
+    --sidebar-width: 65px;
+    --black-grey: #343e4d;
+    --box-shadow: inset -1px 0px 0px;
+    --sidebar-shadow: #1f252e;
+    --white-grey: #bfced9;
+    --sidebar-image-size: 32px;
+    --sidebar-label-color: #a1b4c4;
+    --white2: #f2f5f8;
+    --blue: #3fa9f5;
+    --mobile-sidebar-height: 9vh;
+    --image-drawer-width: 30%;
+    --image-drawer-header-height: 53px;
+    --search-icon-size: 24px;
+    --search-height: 64px;
+    --search-input-height: 40px;
+    --font-weight: 400;
+    --grey: #7a8d9f;
+    --image-drawer-item-min-width: 165px;
+    --grey-white: #cfdae2;
+    --mobile-image-drawer-max-height: 63%;
+    --mobile-box-shadow: inset 0px 1px 0px;
+    --placeholder-image-size: 128px;
+    --displayed-description-height: 51px;
+    --animation-duration: 500ms;
+}
+
 html,
 body {
     padding: 0px;
@@ -32,34 +60,36 @@ button {
 
 /* animation for tablet, desktop device (width > 600px) */
 .hidden {
-    animation: slide-away 500ms;
+    animation: slide-away var(--animation-duration, 500ms);
 }
 
 .show {
-    animation: slide-back 500ms;
+    animation: slide-back var(--animation-duration, 500ms);
 }
 
 .zoom-in {
-    animation: slide-left 500ms;
+    animation: slide-left var(--animation-duration, 500ms);
     width: 100% !important;
 }
 
 .zoom-out {
-    animation: slide-right 500ms;
-    width: calc(100% - 30% - 65px);
+    animation: slide-right var(--animation-duration, 500ms);
+    width: calc(
+        100% - var(--image-drawer-width, 30%) - var(--sidebar-width, 65px)
+    );
 }
 
 /* animation for mobile device (width <= 600px) */
 .mobile-hidden {
-    animation: mobile-slide-away 500ms;
+    animation: mobile-slide-away var(--animation-duration, 500ms);
 }
 
 .mobile-show {
-    animation: mobile-slide-back 500ms;
+    animation: mobile-slide-back var(--animation-duration, 500ms);
 }
 
 .mobile-zoom-in {
-    animation: mobile-slide-down 500ms;
+    animation: mobile-slide-down var(--animation-duration, 500ms);
 }
 
 .mobile-zoom-in > div {
@@ -69,11 +99,13 @@ button {
 }
 
 .mobile-zoom-out {
-    animation: mobile-slide-up 500ms;
+    animation: mobile-slide-up var(--animation-duration, 500ms);
 }
 
 .mobile-zoom-out > div {
     transform: rotate(0deg);
+    width: 100%;
+    height: 100%;
 }
 
 @keyframes slide-away {
@@ -105,7 +137,9 @@ button {
 @keyframes slide-left {
     from {
         transform: translateX(0%);
-        width: calc(100% - 30% - 65px);
+        width: calc(
+            100% - var(--image-drawer-width, 30%) - var(--sidebar-width, 65px)
+        );
     }
     to {
         transform: translateX(-20%);
@@ -120,7 +154,9 @@ button {
     }
     to {
         transform: translateX(50%);
-        width: calc(100% - 30% - 65px);
+        width: calc(
+            100% - var(--image-drawer-width, 30%) - var(--sidebar-width, 65px)
+        );
     }
 }
 

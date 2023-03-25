@@ -1,5 +1,7 @@
 .placeholderContentArea {
-    width: calc(100% - 30% - 65px);
+    width: calc(
+        100% - var(--image-drawer-width, 30%) - var(--sidebar-width, 65px)
+    );
     max-height: 100%;
     height: 100%;
 
@@ -12,10 +14,10 @@
 }
 
 .placeholderImage {
-    width: 128px;
-    height: 128px;
+    width: var(--placeholder-image-size, 128px);
+    height: var(--placeholder-image-size, 128px);
 
-    background: url("Image.svg");
+    background-image: url("Landscape.svg");
     background-repeat: no-repeat;
     background-position: center;
     background-size: cover;
@@ -28,15 +30,17 @@
 .placeholderDescription {
     font-family: "Inter";
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight, 400);
     font-size: 36px;
     line-height: 44px;
     text-align: center;
-    color: #7a8d9f;
+    color: var(--grey, #7a8d9f);
 }
 
 .displayedContentArea {
-    width: calc(100% - 30% - 65px);
+    width: calc(
+        100% - var(--image-drawer-width, 30%) - var(--sidebar-width, 65px)
+    );
     max-height: 100%;
     height: 100%;
 
@@ -45,12 +49,12 @@
     justify-content: center;
     align-items: center;
     padding: 0px;
-    background: #fcfdfd;
+    background: var(--white1, #fcfdfd);
 }
 
 .displayedImage {
     width: 100%;
-    height: calc(100% - 51px);
+    height: calc(100% - var(--displayed-description-height, 51px));
     border: none;
     outline: none;
     object-fit: cover;
@@ -59,16 +63,16 @@
 
 .displayedDescription {
     padding: 16px;
-    height: 51px;
+    height: var(--displayed-description-height, 51px);
     width: 100%;
 
     font-family: "Inter";
     font-style: normal;
-    font-weight: 400;
+    font-weight: var(--font-weight, 400);
     font-size: 16px;
     line-height: 19px;
-    color: #fcfdfd;
-    background: #343e4d;
+    color: var(--white1, #fcfdfd);
+    background: var(--black-grey, #343e4d);
 }
 
 @media only screen and (max-width: 600px) {

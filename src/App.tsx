@@ -6,6 +6,7 @@ import ContentArea from "./components/ContentArea/ContentArea";
 import { Context } from "./contexts/Context";
 import { ImageObject } from "./types/types";
 import styles from "./App.module.css";
+import toggleClasses from "./utils/toggleClasses";
 
 export const App: React.FC = () => {
     const [data, setData] = useState<ImageObject[]>([]);
@@ -13,53 +14,55 @@ export const App: React.FC = () => {
     const [selectedImage, setSelectedImage] = useState<ImageObject>(null);
     const [imageList, setImageList] = useState<ImageObject[]>([]);
 
-    const handleSetSelectedCategory = useCallback((category: string) => {
-        setSelectedCategory(category);
-    }, []);
-
-    const handleSetSelectedImage = useCallback((image: ImageObject) => {
-        setSelectedImage((prev) => {
-            if (prev && prev.metadata[0].value === image.metadata[0].value) {
-                return prev;
-            } else {
-                return image;
+    const handleSetSelectedCategory = useCallback(
+        (category: string) => {
+            if (selectedCategory !== category) {
+                setSelectedCategory(category);
             }
-        });
-    }, []);
-    // console.log(imageList)
-    // console.log(data)
+        },
+        [selectedCategory]
+    );
+
+    const handleSetSelectedImage = useCallback(
+        (image: ImageObject) => {
+            if (
+                !selectedImage ||
+                selectedImage.metadata[0].value != image.metadata[0].value
+            ) {
+                setSelectedImage(image);
+            }
+        },
+        [selectedImage]
+    );
 
     const handleSetImageList = useCallback(
-        (imageList: ImageObject[] | string) => {
-            setImageList((prev) => {
-                // return origin data when change category in sidebar
-                if (
-                    typeof imageList === "string" &&
-                    imageList === "origin data"
-                ) {
-                    // console.log(typeof imageList === "string" &&
-                    // imageList === "origin data")
-                    // console.log(data)
-                    return data;
-                } else if (Array.isArray(imageList)) {
-                    if (prev && prev.length === imageList.length) {
-                        let isChanged = true;
-                        for (let i = 0; i < imageList.length; i++) {
-                            const image = imageList[i];
-                            const prevImage = prev[i];
+        (newImageList: ImageObject[] | string) => {
+            // return origin data when change category in sidebar
+            if (
+                typeof newImageList === "string" &&
+                newImageList === "origin data"
+            ) {
+                setImageList([...data]);
+            } else if (Array.isArray(newImageList)) {
+                if (imageList && imageList.length === newImageList.length) {
+                    let isChanged = false;
+                    for (let i = 0; i < newImageList.length; i++) {
+                        const newImage = newImageList[i];
+                        const prevImage = imageList[i];
 
-                            if (image.id === prevImage.id) {
-                                isChanged = false;
-                            }
+                        if (newImage.id != prevImage.id) {
+                            isChanged = true;
+                            break;
                         }
-                        return isChanged ? imageList : prev;
-                    } else {
-                        return imageList;
                     }
+
+                    isChanged && setImageList(newImageList);
+                } else {
+                    setImageList(newImageList);
                 }
-            });
+            }
         },
-        [data]
+        [imageList]
     );
 
     useLayoutEffect(() => {
@@ -99,6 +102,8 @@ export const App: React.FC = () => {
         };
 
         fetchData();
+
+        window.addEventListener("resize", () => toggleClasses("flex"));
     }, []);
 
     return (

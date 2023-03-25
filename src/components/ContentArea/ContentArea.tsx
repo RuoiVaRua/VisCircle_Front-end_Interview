@@ -1,5 +1,6 @@
 import React, { useCallback, memo } from "react";
 import { ImageObject } from "../../types/types";
+import toggleClasses from "../../utils/toggleClasses";
 import styles from "./ContentArea.module.css";
 
 interface Props {
@@ -8,44 +9,14 @@ interface Props {
 
 const ContentArea: React.FC<Props> = ({ selectedImage }) => {
     const handleZoomImage = useCallback(() => {
-        const imageDrawerElement = document.querySelector(
-            'div[class *= "app"] div[class *= "imageDrawer"]'
-        ) as HTMLElement;
-        const contentAreaElement = document.querySelector(
-            'div[class *= "app"] div[class *= "displayedContentArea"]'
-        ) as HTMLElement;
-
-        if (imageDrawerElement && contentAreaElement) {
-            setTimeout(() => {
-                imageDrawerElement.style.display = "none";
-            }, 500);
-
-            if (window.innerWidth > 600) {
-                imageDrawerElement.classList.remove("mobile-hidden");
-                imageDrawerElement.classList.remove("mobile-show");
-                contentAreaElement.classList.remove("mobile-zoom-in");
-                contentAreaElement.classList.remove("mobile-zoom-out");
-
-                imageDrawerElement.classList.add("hidden");
-                imageDrawerElement.classList.remove("show");
-                contentAreaElement.classList.add("zoom-in");
-                contentAreaElement.classList.remove("zoom-out");
-            } else {
-                imageDrawerElement.classList.remove("hidden");
-                imageDrawerElement.classList.remove("show");
-                contentAreaElement.classList.remove("zoom-in");
-                contentAreaElement.classList.remove("zoom-out");
-
-                imageDrawerElement.classList.add("mobile-hidden");
-                imageDrawerElement.classList.remove("mobile-show");
-                contentAreaElement.classList.add("mobile-zoom-in");
-                contentAreaElement.classList.remove("mobile-zoom-out");
-            }
-        }
+        toggleClasses("none");
     }, []);
 
     return selectedImage ? (
-        <div className={styles.displayedContentArea}>
+        <div
+            className={styles.displayedContentArea}
+            title="Click on the picture for a larger view"
+        >
             <div
                 className={styles.displayedImage}
                 style={{

@@ -6,6 +6,7 @@ import React, {
     memo,
 } from "react";
 import { Context } from "../../contexts/Context";
+import toggleClasses from "../../utils/toggleClasses";
 import styles from "./Sidebar.module.css";
 
 interface Props {
@@ -15,21 +16,20 @@ interface Props {
 const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
     const { setSelectedCategory, setImageList } = useContext(Context);
     const sidebarRef = useRef<HTMLDivElement>(null);
+    const sidebarCategories = useRef<string[]>([
+        "animal",
+        "architecture",
+        "landscape",
+        "people",
+        "all",
+    ]);
 
     const selectCategory = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>): void => {
             const target = event.target as HTMLElement;
-            const imageDrawerElement = document.querySelector(
-                'div[class *= "app"] div[class *= "imageDrawer"]'
-            ) as HTMLElement;
-            const contentAreaElement = document.querySelector(
-                'div[class *= "app"] div[class *= "displayedContentArea"]'
-            ) as HTMLElement;
             const currentSelectedSidebarItem = document.querySelector(
                 "." + styles.selectedSidebarItem
             );
-
-            setImageList("origin data");
 
             if (currentSelectedSidebarItem) {
                 currentSelectedSidebarItem.className = styles.sidebarItem;
@@ -44,34 +44,10 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
                 setSelectedCategory((target.parentNode as HTMLElement).id);
             }
 
-            if (imageDrawerElement && contentAreaElement) {
-                setTimeout(() => {
-                    imageDrawerElement.style.display = "flex";
-                }, 500);
-                if (window.innerWidth > 600) {
-                    imageDrawerElement.classList.remove("mobile-hidden");
-                    imageDrawerElement.classList.remove("mobile-show");
-                    contentAreaElement.classList.remove("mobile-zoom-in");
-                    contentAreaElement.classList.remove("mobile-zoom-out");
-
-                    imageDrawerElement.classList.remove("hidden");
-                    imageDrawerElement.classList.add("show");
-                    contentAreaElement.classList.remove("zoom-in");
-                    contentAreaElement.classList.add("zoom-out");
-                } else {
-                    imageDrawerElement.classList.remove("hidden");
-                    imageDrawerElement.classList.remove("show");
-                    contentAreaElement.classList.remove("zoom-in");
-                    contentAreaElement.classList.remove("zoom-out");
-
-                    imageDrawerElement.classList.remove("mobile-hidden");
-                    imageDrawerElement.classList.add("mobile-show");
-                    contentAreaElement.classList.remove("mobile-zoom-in");
-                    contentAreaElement.classList.add("mobile-zoom-out");
-                }
-            }
+            setImageList("origin data");
+            toggleClasses("flex");
         },
-        [setSelectedCategory]
+        [setSelectedCategory, setImageList]
     );
 
     useLayoutEffect(() => {
@@ -100,39 +76,45 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
     }, [sidebarRef, selectedCategory]);
 
     return (
-        <div className={styles.sidebar} ref={sidebarRef}>
-            <button
-                className={styles.selectedSidebarItem}
-                onClick={selectCategory}
-                id="animal"
-            >
-                <img className={styles.itemImage} src="Animal.svg"></img>
-                <span className={styles.itemLabel}>Animals</span>
-            </button>
-            <button
-                className={styles.sidebarItem}
-                onClick={selectCategory}
-                id="architecture"
-            >
-                <img className={styles.itemImage} src="Architecture.svg"></img>
-                <span className={styles.itemLabel}>Architecture</span>
-            </button>
-            <button
-                className={styles.sidebarItem}
-                onClick={selectCategory}
-                id="landscape"
-            >
-                <img className={styles.itemImage} src="Image.svg"></img>
-                <span className={styles.itemLabel}>Landscapes</span>
-            </button>
-            <button
-                className={styles.sidebarItem}
-                onClick={selectCategory}
-                id="people"
-            >
-                <img className={styles.itemImage} src="People.svg"></img>
-                <span className={styles.itemLabel}>People</span>
-            </button>
+        <div
+            className={styles.sidebar}
+            ref={sidebarRef}
+            title="Click on the items to select the corresponding picture category"
+        >
+            {sidebarCategories.current?.length &&
+                sidebarCategories.current.map((value, index) => {
+                    const imageName = value
+                        .replace(value[0], value[0].toUpperCase())
+                        .concat(".svg");
+                    const title = value.replace(
+                        value[0],
+                        value[0].toUpperCase()
+                    );
+
+                    return (
+                        <button
+                            key={index}
+                            className={
+                                index === 0
+                                    ? styles.selectedSidebarItem
+                                    : styles.sidebarItem
+                            }
+                            onClick={selectCategory}
+                            id={value}
+                        >
+                            <img
+                                className={styles.itemImage}
+                                src={imageName}
+                                alt={value}
+                            ></img>
+                            <span className={styles.itemLabel}>
+                                {["animal", "landscape"].includes(value)
+                                    ? title + "s"
+                                    : title}
+                            </span>
+                        </button>
+                    );
+                })}
         </div>
     );
 };

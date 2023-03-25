@@ -46,7 +46,6 @@ const ImageDrawer: React.FC<Props> = ({
         },
         [setSelectedImage, imageList]
     );
-    // console.log(imageList)
 
     const handleSearchImage = useCallback(
         (event: React.FormEvent<HTMLInputElement>): void => {
@@ -85,7 +84,13 @@ const ImageDrawer: React.FC<Props> = ({
                 }
             }, 800);
         },
-        [data, selectedCategory]
+        [
+            data,
+            selectedCategory,
+            setImageList,
+            setSelectedCategory,
+            delayTimeRef,
+        ]
     );
 
     return (
@@ -93,7 +98,10 @@ const ImageDrawer: React.FC<Props> = ({
             <div className={styles.header}>
                 <span>{title}</span>
             </div>
-            <div className={styles.search}>
+            <div
+                className={styles.search}
+                title="Enter the name or description to find the picture"
+            >
                 <div className={styles.searchInput}>
                     <input
                         id="search-input"
@@ -106,10 +114,16 @@ const ImageDrawer: React.FC<Props> = ({
                     </label>
                 </div>
             </div>
-            <div className={styles.category}>
+            <div
+                className={styles.category}
+                title="Select 1 picture to display larger on the right side"
+            >
                 {imageList.length ? (
                     imageList.map((image, index) => {
-                        if (image.category === selectedCategory)
+                        if (
+                            selectedCategory === "all" ||
+                            image.category === selectedCategory
+                        )
                             return (
                                 <button
                                     className={styles.categoryItem}
