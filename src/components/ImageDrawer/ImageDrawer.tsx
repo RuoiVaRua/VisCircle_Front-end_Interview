@@ -21,6 +21,9 @@ const ImageDrawer: React.FC<Props> = ({
             .concat("s")
             .replace(selectedCategory[0], selectedCategory[0].toUpperCase());
     }, [selectedCategory]);
+    const imageListMap = useMemo(() => {
+        return new Map(imageList.map((image) => [image.id, image]));
+    }, [imageList]);
 
     const selectImage = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -36,12 +39,18 @@ const ImageDrawer: React.FC<Props> = ({
 
             if (target.dataset?.image) {
                 const imageId = target.dataset.image;
-                for (const image of imageList) {
-                    if (image.id === imageId) {
-                        setSelectedImage(image);
-                        break;
-                    }
-                }
+
+                // use Map to get image with id = imageId
+                imageListMap.get(imageId) &&
+                    setSelectedImage(imageListMap.get(imageId));
+
+                // or use for loop
+                // for (const image of imageList) {
+                //     if (image.id === imageId) {
+                //         setSelectedImage(image);
+                //         break;
+                //     }
+                // }
             }
         },
         [setSelectedImage, imageList]
@@ -118,34 +127,42 @@ const ImageDrawer: React.FC<Props> = ({
                 className={styles.category}
                 title="Select 1 picture to display larger on the right side"
             >
-                {imageList.length ? (
-                    imageList.map((image, index) => {
-                        if (
-                            selectedCategory === "all" ||
-                            image.category === selectedCategory
-                        )
-                            return (
-                                <button
-                                    className={styles.categoryItem}
-                                    style={{
-                                        backgroundImage: `url(${image.metadata[0].value})`,
-                                        backgroundPosition: "center",
-                                        backgroundSize: "cover",
-                                        backgroundRepeat: "no-repeat",
-                                        backgroundColor: "#CFDAE2",
-                                    }}
-                                    key={index}
-                                    data-image={image.id}
-                                    onClick={selectImage}
-                                ></button>
-                            );
-                    })
-                ) : (
-                    <button className={styles.categoryItem}></button>
-                )}
+                {imageListElements(imageList, selectedCategory, selectImage)}
             </div>
         </div>
     );
 };
+
+function imageListElements(
+    imageList: ImageObject[],
+    selectedCategory: string,
+    selectImage
+) {
+    return imageList.length ? (
+        imageList.map((image, index) => {
+            if (
+                selectedCategory === "all" ||
+                image.category === selectedCategory
+            )
+                return (
+                    <button
+                        className={styles.categoryItem}
+                        style={{
+                            backgroundImage: `url(${image.metadata[0].value})`,
+                            backgroundPosition: "center",
+                            backgroundSize: "cover",
+                            backgroundRepeat: "no-repeat",
+                            backgroundColor: "#CFDAE2",
+                        }}
+                        key={index}
+                        data-image={image.id}
+                        onClick={selectImage}
+                    ></button>
+                );
+        })
+    ) : (
+        <button className={styles.categoryItem}></button>
+    );
+}
 
 export default memo(ImageDrawer);

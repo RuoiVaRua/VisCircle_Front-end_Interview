@@ -96,12 +96,15 @@
         minmax(calc(var(--image-drawer-item-min-width, 165px) / 100 * 90), 1fr)
     ); /* 90% of 165px ~ 150px*/
     align-content: start;
+    justify-items: center;
 }
 
 .categoryItem,
 .selectedImage {
     aspect-ratio: 165 / 120;
     min-width: var(--image-drawer-item-min-width, 165px);
+    width: 100%;
+    max-width: 300px;
     background-image: url("Landscape.svg");
     background-color: var(--grey-white, #cfdae2);
     background-repeat: no-repeat;
@@ -128,6 +131,7 @@
     .imageDrawer {
         width: 100%;
         max-height: var(--mobile-image-drawer-max-height, 63%);
+        height: fit-content;
         box-shadow: var(--mobile-box-shadow, inset 0px 1px 0px)
             var(--white-grey, #bfced9);
         margin-bottom: var(--mobile-sidebar-height, 9vh);

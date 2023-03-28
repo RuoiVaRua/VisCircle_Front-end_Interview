@@ -3,6 +3,7 @@ import React, {
     useLayoutEffect,
     useRef,
     useContext,
+    useMemo,
     memo,
 } from "react";
 import { Context } from "../../contexts/Context";
@@ -50,6 +51,42 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
         [setSelectedCategory, setImageList]
     );
 
+    const sidebarItemElements = useMemo(() => {
+        return (
+            sidebarCategories.current?.length &&
+            sidebarCategories.current.map((value, index) => {
+                const imageName = value
+                    .replace(value[0], value[0].toUpperCase())
+                    .concat(".svg");
+                const title = value.replace(value[0], value[0].toUpperCase());
+
+                return (
+                    <button
+                        key={index}
+                        className={
+                            index === 0
+                                ? styles.selectedSidebarItem
+                                : styles.sidebarItem
+                        }
+                        onClick={selectCategory}
+                        id={value}
+                    >
+                        <img
+                            className={styles.itemImage}
+                            src={imageName}
+                            alt={value}
+                        ></img>
+                        <span className={styles.itemLabel}>
+                            {["animal", "landscape"].includes(value)
+                                ? title + "s"
+                                : title}
+                        </span>
+                    </button>
+                );
+            })
+        );
+    }, [sidebarCategories, selectCategory]);
+
     useLayoutEffect(() => {
         // category can change when searching in imageDrawer
         const currentSelectedSidebarItem = document.querySelector(
@@ -62,6 +99,11 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
         ) {
             for (const button of sidebarRef.current.childNodes) {
                 if ((button as HTMLElement).id === selectedCategory) {
+                    if (
+                        (button as HTMLElement).className === styles.selectedSidebarItem
+                    ) {
+                        break;
+                    }
                     currentSelectedSidebarItem.setAttribute(
                         "class",
                         styles.sidebarItem
@@ -70,6 +112,7 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
                         "class",
                         styles.selectedSidebarItem
                     );
+                    break;
                 }
             }
         }
@@ -81,40 +124,7 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
             ref={sidebarRef}
             title="Click on the items to select the corresponding picture category"
         >
-            {sidebarCategories.current?.length &&
-                sidebarCategories.current.map((value, index) => {
-                    const imageName = value
-                        .replace(value[0], value[0].toUpperCase())
-                        .concat(".svg");
-                    const title = value.replace(
-                        value[0],
-                        value[0].toUpperCase()
-                    );
-
-                    return (
-                        <button
-                            key={index}
-                            className={
-                                index === 0
-                                    ? styles.selectedSidebarItem
-                                    : styles.sidebarItem
-                            }
-                            onClick={selectCategory}
-                            id={value}
-                        >
-                            <img
-                                className={styles.itemImage}
-                                src={imageName}
-                                alt={value}
-                            ></img>
-                            <span className={styles.itemLabel}>
-                                {["animal", "landscape"].includes(value)
-                                    ? title + "s"
-                                    : title}
-                            </span>
-                        </button>
-                    );
-                })}
+            {sidebarItemElements}
         </div>
     );
 };

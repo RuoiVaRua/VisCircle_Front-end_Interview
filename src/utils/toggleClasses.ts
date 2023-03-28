@@ -14,6 +14,8 @@ function toggleClasses(displayState: string) {
         const removeMobile = window.innerWidth > 600 ? "mobile-" : "";
         let removeOrAdd = "remove";
         let addOrRemove = "add";
+        const isImageZoomingIn = displayState === "none" ||
+            contentAreaElement.className.includes("zoom-in");
 
         if (displayState === "none") {
             removeOrAdd = "add";
@@ -26,9 +28,11 @@ function toggleClasses(displayState: string) {
         contentAreaElement.classList.remove(removeMobile + "zoom-out");
 
         imageDrawerElement.classList[removeOrAdd](addMobile + "hidden");
-        imageDrawerElement.classList[addOrRemove](addMobile + "show");
+        isImageZoomingIn &&
+            imageDrawerElement.classList[addOrRemove](addMobile + "show");
         contentAreaElement.classList[removeOrAdd](addMobile + "zoom-in");
-        contentAreaElement.classList[addOrRemove](addMobile + "zoom-out");
+        isImageZoomingIn &&
+            contentAreaElement.classList[addOrRemove](addMobile + "zoom-out");
     }
 }
 
