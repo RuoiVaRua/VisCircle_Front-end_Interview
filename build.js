@@ -28,7 +28,7 @@ esbuild.build({
   },
   plugins: [
     copyStaticFiles({
-      src: './static',
+      src: './public',
       dest: out
     }),
     cssModulesPlugin()
