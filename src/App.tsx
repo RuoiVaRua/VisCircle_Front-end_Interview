@@ -103,7 +103,13 @@ export const App: React.FC = () => {
 
         fetchData();
 
-        window.addEventListener("resize", () => toggleClasses("flex"));
+        const resizeHandler = () => toggleClasses("flex");
+
+        window.addEventListener("resize", resizeHandler);
+
+        return () => {
+            window.removeEventListener("resize", resizeHandler);
+        };
     }, []);
 
     return (

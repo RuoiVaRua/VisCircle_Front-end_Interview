@@ -21,9 +21,9 @@ const ImageDrawer: React.FC<Props> = ({
             .concat("s")
             .replace(selectedCategory[0], selectedCategory[0].toUpperCase());
     }, [selectedCategory]);
-    const imageListMap = useMemo(() => {
-        return new Map(imageList.map((image) => [image.id, image]));
-    }, [imageList]);
+    const dataMap = useMemo(() => {
+        return new Map(data.map((image) => [image.id, image]));
+    }, [data]);
 
     const selectImage = useCallback(
         (event: React.MouseEvent<HTMLButtonElement>): void => {
@@ -41,8 +41,7 @@ const ImageDrawer: React.FC<Props> = ({
                 const imageId = target.dataset.image;
 
                 // use Map to get image with id = imageId
-                imageListMap.get(imageId) &&
-                    setSelectedImage(imageListMap.get(imageId));
+                dataMap.get(imageId) && setSelectedImage(dataMap.get(imageId));
 
                 // or use for loop
                 // for (const image of imageList) {
