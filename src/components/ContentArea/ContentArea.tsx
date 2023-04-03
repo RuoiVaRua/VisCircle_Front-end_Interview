@@ -21,10 +21,6 @@ const ContentArea: React.FC<Props> = ({ selectedImage }) => {
                 className={styles.displayedImage}
                 style={{
                     backgroundImage: `url(${selectedImage.metadata[0].value})`,
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                    backgroundColor: "#CFDAE2",
                 }}
                 onClick={handleZoomImage}
             ></div>
@@ -34,7 +30,12 @@ const ContentArea: React.FC<Props> = ({ selectedImage }) => {
         </div>
     ) : (
         <div className={styles.placeholderContentArea}>
-            <div className={styles.placeholderImage}></div>
+            <div
+                className={styles.placeholderImage}
+                style={{
+                    backgroundImage: 'url("Landscape.svg")',
+                }}
+            ></div>
             <span className={styles.placeholderDescription}>
                 Select the Photo
             </span>

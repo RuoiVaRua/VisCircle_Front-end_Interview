@@ -52,7 +52,11 @@ const ImageDrawer: React.FC<Props> = ({
                 // }
             }
         },
-        [setSelectedImage, imageList]
+        [
+            setSelectedImage,
+            dataMap,
+            // imageList
+        ]
     );
 
     const handleSearchImage = useCallback(
@@ -148,10 +152,6 @@ function imageListElements(
                         className={styles.categoryItem}
                         style={{
                             backgroundImage: `url(${image.metadata[0].value})`,
-                            backgroundPosition: "center",
-                            backgroundSize: "cover",
-                            backgroundRepeat: "no-repeat",
-                            backgroundColor: "#CFDAE2",
                         }}
                         key={index}
                         data-image={image.id}
@@ -160,7 +160,12 @@ function imageListElements(
                 );
         })
     ) : (
-        <button className={styles.categoryItem}></button>
+        <button
+            className={styles.categoryItem}
+            style={{
+                backgroundImage: 'url("Landscape.svg")',
+            }}
+        ></button>
     );
 }
 

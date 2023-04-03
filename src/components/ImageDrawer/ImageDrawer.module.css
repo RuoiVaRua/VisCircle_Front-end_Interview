@@ -104,8 +104,8 @@
     aspect-ratio: 165 / 120;
     min-width: var(--image-drawer-item-min-width, 165px);
     width: 100%;
-    max-width: 300px;
-    background-image: url("/src/images/Landscape.svg");
+    max-width: 250px;
+    /* background-image: url("Landscape.svg"); */
     background-color: var(--grey-white, #cfdae2);
     background-repeat: no-repeat;
     background-position: center;
