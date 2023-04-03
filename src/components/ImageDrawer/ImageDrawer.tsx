@@ -1,20 +1,23 @@
-import React, { useCallback, useMemo, useRef, useContext, memo } from "react";
+import React, { useCallback, useMemo, useRef, useContext, memo, Dispatch } from "react";
 import { Context } from "../../contexts/Context";
-import { ImageObject } from "../../types/types";
+import { ImageListAction, ImageObject } from "../../types/types";
 import styles from "./ImageDrawer.module.css";
 
 interface Props {
     data: ImageObject[];
     selectedCategory: string;
     imageList: ImageObject[];
+    dispatcher: Dispatch<ImageListAction>;
 }
 
 const ImageDrawer: React.FC<Props> = ({
     data,
     selectedCategory,
     imageList,
+    dispatcher,
 }) => {
-    const { setSelectedImage, setSelectedCategory, setImageList } = useContext(Context);
+    // const { setSelectedImage, setSelectedCategory, setImageList } = useContext(Context);
+    const { setSelectedImage, setSelectedCategory } = useContext(Context);
     const delayTimeRef = useRef<number>(0);
     const title = useMemo<string>(() => {
         return selectedCategory
@@ -52,7 +55,10 @@ const ImageDrawer: React.FC<Props> = ({
                 // }
             }
         },
-        [setSelectedImage, imageList]
+        [
+            setSelectedImage, 
+            imageList
+        ]
     );
 
     const handleSearchImage = useCallback(
@@ -83,19 +89,23 @@ const ImageDrawer: React.FC<Props> = ({
                         }
                     }
 
-                    setImageList(searchedImageList);
+                    // setImageList(searchedImageList);
+                    dispatcher({type: 'new data', payload: searchedImageList})
+
                     if (!areSameCategory && searchedImageList.length) {
                         setSelectedCategory(searchedImageList[0].category);
                     }
                 } else {
-                    setImageList([...data]);
+                    // setImageList([...data]);
+                    dispatcher({type: 'origin data', payload: data});
                 }
             }, 800);
         },
         [
             data,
             selectedCategory,
-            setImageList,
+            // setImageList,
+            dispatcher,
             setSelectedCategory,
             delayTimeRef,
         ]

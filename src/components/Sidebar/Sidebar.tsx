@@ -5,17 +5,26 @@ import React, {
     useContext,
     useMemo,
     memo,
+    Dispatch,
 } from "react";
 import { Context } from "../../contexts/Context";
 import toggleClasses from "../../utils/toggleClasses";
 import styles from "./Sidebar.module.css";
+import { ImageListAction, ImageObject } from "../../types/types";
 
 interface Props {
     selectedCategory: string;
+    data: ImageObject[];
+    dispatcher: Dispatch<ImageListAction>;
 }
 
-const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
-    const { setSelectedCategory, setImageList } = useContext(Context);
+const Sidebar: React.FC<Props> = ({ 
+    selectedCategory, 
+    data, 
+    dispatcher
+}) => {
+    // const { setSelectedCategory, setImageList } = useContext(Context);
+    const { setSelectedCategory } = useContext(Context);
     const sidebarRef = useRef<HTMLDivElement>(null);
     const sidebarCategories = useRef<string[]>([
         "animal",
@@ -45,10 +54,15 @@ const Sidebar: React.FC<Props> = ({ selectedCategory }) => {
                 setSelectedCategory((target.parentNode as HTMLElement).id);
             }
 
-            setImageList("origin data");
+            // setImageList("origin data");
+            dispatcher({type: 'origin data', payload: data});
             toggleClasses("flex");
         },
-        [setSelectedCategory, setImageList]
+        [
+            setSelectedCategory, 
+            // setImageList
+            dispatcher
+        ]
     );
 
     const sidebarItemElements = useMemo(() => {

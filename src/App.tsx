@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useLayoutEffect, useState, useCallback } from "react";
+import React, { useLayoutEffect, useState, useCallback, useReducer } from "react";
 import Sidebar from "./components/Sidebar/Sidebar";
 import ImageDrawer from "./components/ImageDrawer/ImageDrawer";
 import ContentArea from "./components/ContentArea/ContentArea";
@@ -7,12 +7,14 @@ import { Context } from "./contexts/Context";
 import { ImageObject } from "./types/types";
 import styles from "./App.module.css";
 import toggleClasses from "./utils/toggleClasses";
+import imageListReducer from "./redux/imageListReducer";
 
 export const App: React.FC = () => {
     const [data, setData] = useState<ImageObject[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<string>("animal");
     const [selectedImage, setSelectedImage] = useState<ImageObject>(null);
-    const [imageList, setImageList] = useState<ImageObject[]>([]);
+    // const [imageList, setImageList] = useState<ImageObject[]>([]);
+    const [imageList, dispatcher] = useReducer(imageListReducer, []);
 
     const handleSetSelectedCategory = useCallback(
         (category: string) => {
@@ -35,35 +37,35 @@ export const App: React.FC = () => {
         [selectedImage]
     );
 
-    const handleSetImageList = useCallback(
-        (newImageList: ImageObject[] | string) => {
-            // return origin data when change category in sidebar
-            if (
-                typeof newImageList === "string" &&
-                newImageList === "origin data"
-            ) {
-                setImageList([...data]);
-            } else if (Array.isArray(newImageList)) {
-                if (imageList && imageList.length === newImageList.length) {
-                    let isChanged = false;
-                    for (let i = 0; i < newImageList.length; i++) {
-                        const newImage = newImageList[i];
-                        const prevImage = imageList[i];
+    // const handleSetImageList = useCallback(
+    //     (newImageList: ImageObject[] | string) => {
+    //         // return origin data when change category in sidebar
+    //         if (
+    //             typeof newImageList === "string" &&
+    //             newImageList === "origin data"
+    //         ) {
+    //             setImageList([...data]);
+    //         } else if (Array.isArray(newImageList)) {
+    //             if (imageList && imageList.length === newImageList.length) {
+    //                 let isChanged = false;
+    //                 for (let i = 0; i < newImageList.length; i++) {
+    //                     const newImage = newImageList[i];
+    //                     const prevImage = imageList[i];
 
-                        if (newImage.id != prevImage.id) {
-                            isChanged = true;
-                            break;
-                        }
-                    }
+    //                     if (newImage.id != prevImage.id) {
+    //                         isChanged = true;
+    //                         break;
+    //                     }
+    //                 }
 
-                    isChanged && setImageList(newImageList);
-                } else {
-                    setImageList(newImageList);
-                }
-            }
-        },
-        [imageList]
-    );
+    //                 isChanged && setImageList(newImageList);
+    //             } else {
+    //                 setImageList(newImageList);
+    //             }
+    //         }
+    //     },
+    //     [imageList]
+    // );
 
     useLayoutEffect(() => {
         const fetchData = async () => {
@@ -94,7 +96,8 @@ export const App: React.FC = () => {
                         newImageList.push(newObj);
                     }
                     setData(newImageList);
-                    setImageList(newImageList);
+                    // setImageList(newImageList);
+                    dispatcher({type: 'origin data', payload: newImageList})
                 }
             } catch (error) {
                 console.error(error);
@@ -118,14 +121,19 @@ export const App: React.FC = () => {
                 value={{
                     setSelectedCategory: handleSetSelectedCategory,
                     setSelectedImage: handleSetSelectedImage,
-                    setImageList: handleSetImageList,
+                    // setImageList: handleSetImageList,
                 }}
             >
-                <Sidebar selectedCategory={selectedCategory}></Sidebar>
+                <Sidebar 
+                    selectedCategory={selectedCategory}
+                    data={data}
+                    dispatcher={dispatcher}
+                ></Sidebar>
                 <ImageDrawer
                     data={data}
                     selectedCategory={selectedCategory}
                     imageList={imageList}
+                    dispatcher={dispatcher}
                 ></ImageDrawer>
                 <ContentArea selectedImage={selectedImage}></ContentArea>
             </Context.Provider>

@@ -7,3 +7,8 @@ export interface ImageObject {
         value: string;
     }[];
 }
+
+export type ImageListAction = {
+    type: 'origin data' | 'new data';
+    payload: ImageObject[];
+}
