@@ -1,4 +1,4 @@
-# Deployed to railway server: [Live site](https://master.dfdxgfd2hz5he.amplifyapp.com/)
+# Deployed to railway server: [Live site](https://vuhung1001.github.io/VisCircle_Front-end_Interview/)
 
 # Frontend dev test
 
