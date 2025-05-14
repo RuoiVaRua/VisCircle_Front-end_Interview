@@ -14,9 +14,9 @@ this project automatically serves static file from static/ folder while running,
 
 # This web app is developed based on 2 required files:
 
-[Instruction.pdf](https://github.com/VuHung1001/VisCircle_Front-end_Interview/blob/master/Instruction.pdf)
+[Instruction.pdf](https://github.com/RuoiVaRua/VisCircle_Front-end_Interview/blob/master/Instruction.pdf)
 
-[figma file](https://github.com/VuHung1001/VisCircle_Front-end_Interview/blob/master/Front-End%20Developer%20Task.fig)
+[figma file](https://github.com/RuoiVaRua/VisCircle_Front-end_Interview/blob/master/Front-End%20Developer%20Task.fig)
 or open it directly on the [figma.com website](https://www.figma.com/file/EYc4B7jxnJYCnQpXs6JDE4/Front-End-Developer-Task?node-id=0-1&t=NUn9JZgs7ZrSEXU8-0)
 
 ## Additional features than originally required in figma and Instruction files:
